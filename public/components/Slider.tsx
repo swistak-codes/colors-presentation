@@ -8,6 +8,8 @@ type Props = {
   label: string;
   min: number;
   max: number;
+  realMax: number;
+  step: number;
   disabled: boolean;
 };
 
@@ -17,23 +19,27 @@ export const Slider = ({
   label,
   min,
   max,
+  realMax,
+  step,
   disabled,
 }: Props) => {
   const onChange = (e: JSXInternal.TargetedEvent<HTMLInputElement>) =>
-    setValue(e.currentTarget.valueAsNumber);
+    setValue(Math.min(e.currentTarget.valueAsNumber, max));
 
   const props = {
     value,
     onChange,
     min,
     max,
+    step,
     disabled,
+    class: styles.input,
   };
 
   return (
     <div class={styles.container}>
-      <label>{label}</label>
-      <input type="slider" {...props} />
+      <label class={styles.label}>{label}</label>
+      <input type="range" {...props} max={realMax} />
       <input type="number" {...props} />
     </div>
   );

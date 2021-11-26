@@ -17,7 +17,7 @@ type SingleProps = {
   label: string;
 };
 
-const other = {
+const other: Record<number, Record<number, number>> = {
   0: {
     1: 2,
     2: 1,
@@ -40,7 +40,7 @@ const SingleSlider = ({
   setLocked,
   label,
 }: SingleProps) => {
-  const otherIds = Object.keys(other[id]);
+  const otherId = Object.values(other[id]).filter((x) => x !== locked)[0];
   const isLocked = locked === id;
 
   return (
@@ -51,7 +51,9 @@ const SingleSlider = ({
         setValue={setValue}
         label={label}
         min={0}
-        max={Math.min(1 - value[otherIds[0]] - value[otherIds[1]], 1)}
+        max={Math.min(1 - value[otherId], 1)}
+        realMax={1}
+        step={0.01}
         disabled={isLocked}
       />
     </div>
@@ -64,7 +66,12 @@ export const TripleSlider = ({ value, setValue }: Props) => {
   const updateValues = (id: number) => (val: number) => {
     const result: [number, number, number] = [...value];
     result[id] = val;
-    result[locked] = 1 - val - result[other[id][locked]];
+    result[locked] = parseFloat(
+      (1 - val - result[other[id][locked]]).toPrecision(4)
+    );
+    if (result[locked] < 0.0001) {
+      result[locked] = 0;
+    }
     setValue(result);
   };
 
@@ -75,7 +82,7 @@ export const TripleSlider = ({ value, setValue }: Props) => {
   };
 
   return (
-    <>
+    <div>
       <SingleSlider
         id={0}
         setValue={updateValues(0)}
@@ -94,6 +101,6 @@ export const TripleSlider = ({ value, setValue }: Props) => {
         label="Kb"
         {...sliderProps}
       />
-    </>
+    </div>
   );
 };

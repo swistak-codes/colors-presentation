@@ -6,6 +6,6 @@ body {
   text-align: center;
 }
 
-.app > section {
-  padding: 20px;
+section > * {
+  margin-bottom: 16px;
 }

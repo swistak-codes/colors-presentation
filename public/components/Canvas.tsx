@@ -1,18 +1,20 @@
 import * as preact from "preact";
-import styles from "./Canvas.module.css";
 import { useEffect, useRef } from "preact/compat";
+import styles from "./Canvas.module.css";
+import { CANVAS_SIZE } from "../consts";
 
 type Props = {
   image: HTMLImageElement;
   callback: (ctx: CanvasRenderingContext2D) => void;
 };
 
-const CANVAS_SIZE = 500;
-
 export const Canvas = ({ image, callback }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
 
   useEffect(() => {
+    if (!image) {
+      return;
+    }
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const ratio = Math.min(
@@ -21,17 +23,9 @@ export const Canvas = ({ image, callback }: Props) => {
     );
     context.imageSmoothingEnabled = true;
     context.imageSmoothingQuality = "high";
-    context.drawImage(
-      image,
-      0,
-      0,
-      image.width,
-      image.height,
-      0,
-      0,
-      ratio * image.width,
-      ratio * image.height
-    );
+    canvas.height = ratio * image.height;
+    canvas.width = ratio * image.width;
+    context.drawImage(image, 0, 0, ratio * image.width, ratio * image.height);
     callback(context);
 
     return () => {
@@ -39,5 +33,5 @@ export const Canvas = ({ image, callback }: Props) => {
     };
   }, [image, callback]);
 
-  return <canvas class={styles.canvas} ref={canvasRef} />;
+  return <canvas class={styles.canvas} width={0} height={0} ref={canvasRef} />;
 };
