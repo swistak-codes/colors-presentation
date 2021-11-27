@@ -1,4 +1,6 @@
 .cache
 node_modules
 dist
+build
+*.log
 stats.html
