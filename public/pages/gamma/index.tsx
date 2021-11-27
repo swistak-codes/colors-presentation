@@ -4,31 +4,31 @@ import { Uploader } from "../../components/Uploader";
 import { Canvas } from "../../components/Canvas";
 import { noop } from "../../logic/noop";
 import { Slider } from "../../components/Slider";
-import { imageToTwoTone } from "../../logic/imageToTwoTone";
 import { Routes } from "../../routes";
+import { gammaCorrection } from "../../logic/gammaCorrection";
 
-const TwoTone = () => {
+const Gamma = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [threshold, setThreshold] = useState(128);
+  const [gamma, setGamma] = useState(1);
 
   return (
     <section>
-      <h1>{Routes.twoTone.title}</h1>
+      <h1>{Routes.gamma.title}</h1>
       <Uploader setValue={setImage} />
       <Canvas image={image} callback={noop} />
-      <Canvas image={image} callback={imageToTwoTone(threshold)} />
+      <Canvas image={image} callback={gammaCorrection(gamma)} />
       <Slider
-        value={threshold}
-        setValue={setThreshold}
-        label="Próg"
+        value={gamma}
+        setValue={setGamma}
+        label="γ"
         min={0}
-        max={255}
-        realMax={255}
-        step={1}
+        max={10}
+        realMax={10}
+        step={0.01}
         disabled={false}
       />
     </section>
   );
 };
 
-export default TwoTone;
+export default Gamma;

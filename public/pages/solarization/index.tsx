@@ -4,19 +4,20 @@ import { Uploader } from "../../components/Uploader";
 import { Canvas } from "../../components/Canvas";
 import { noop } from "../../logic/noop";
 import { Slider } from "../../components/Slider";
-import { imageToTwoTone } from "../../logic/imageToTwoTone";
 import { Routes } from "../../routes";
+import { solarize } from "../../logic/solarize";
 
-const TwoTone = () => {
+const Solarization = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [threshold, setThreshold] = useState(128);
+  const [threshold, setThreshold] = useState(255);
+  const [revert, setRevert] = useState(false);
 
   return (
     <section>
-      <h1>{Routes.twoTone.title}</h1>
+      <h1>{Routes.solarization.title}</h1>
       <Uploader setValue={setImage} />
       <Canvas image={image} callback={noop} />
-      <Canvas image={image} callback={imageToTwoTone(threshold)} />
+      <Canvas image={image} callback={solarize(threshold, revert)} />
       <Slider
         value={threshold}
         setValue={setThreshold}
@@ -27,8 +28,17 @@ const TwoTone = () => {
         step={1}
         disabled={false}
       />
+      <div>
+        <input
+          id="revert"
+          type="checkbox"
+          checked={revert}
+          onChange={(e) => setRevert(e.currentTarget.checked)}
+        />
+        <label for="revert">Odwrócona</label>
+      </div>
     </section>
   );
 };
 
-export default TwoTone;
+export default Solarization;

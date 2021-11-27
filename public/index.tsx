@@ -3,17 +3,12 @@ import {
   LocationProvider,
   Router,
   Route,
-  lazy,
   ErrorBoundary,
   hydrate,
   prerender as ssr,
 } from "preact-iso";
 import { NotFound } from "./pages/_404";
-import { Home } from "./pages/home";
-
-const Greyscale = lazy(() => import("./pages/greyscale"));
-const GreyscaleAdjusted = lazy(() => import("./pages/greyscale-adjusted"));
-const TwoTone = lazy(() => import("./pages/twotone"));
+import { Routes } from "./routes";
 
 export function App() {
   return (
@@ -21,10 +16,39 @@ export function App() {
       <div class="app">
         <ErrorBoundary>
           <Router>
-            <Route path="/" component={Home} />
-            <Route path="/greyscale" component={Greyscale} />
-            <Route path="/greyscale-adjusted" component={GreyscaleAdjusted} />
-            <Route path="/twotone" component={TwoTone} />
+            <Route path={Routes.home.path} component={Routes.home.component} />
+            <Route
+              path={Routes.greyscale.path}
+              component={Routes.greyscale.component}
+            />
+            <Route
+              path={Routes.greyscaleAdjusted.path}
+              component={Routes.greyscaleAdjusted.component}
+            />
+            <Route
+              path={Routes.twoTone.path}
+              component={Routes.twoTone.component}
+            />
+            <Route
+              path={Routes.brightness.path}
+              component={Routes.brightness.component}
+            />
+            <Route
+              path={Routes.contrast.path}
+              component={Routes.contrast.component}
+            />
+            <Route
+              path={Routes.gamma.path}
+              component={Routes.gamma.component}
+            />
+            <Route
+              path={Routes.inversion.path}
+              component={Routes.inversion.component}
+            />
+            <Route
+              path={Routes.solarization.path}
+              component={Routes.solarization.component}
+            />
             <Route default component={NotFound} />
           </Router>
         </ErrorBoundary>

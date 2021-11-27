@@ -1,1 +1,1 @@
-export const CANVAS_SIZE = 400;
+export const CANVAS_MAX_SIZE = 400;

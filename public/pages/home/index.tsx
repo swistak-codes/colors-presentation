@@ -1,10 +1,16 @@
 import * as preact from "preact";
+import { Routes } from "../../routes";
 
 export const Home = () => (
-  <>
-    <a href="/">Główna</a>
-    <a href="/greyscale">Skala szarości</a>
-    <a href="/greyscale-adjusted">Skala szarości (sterowana)</a>
-    <a href="/twotone">Tryb dwukolorowy</a>
-  </>
+  <nav>
+    <ul>
+      {Object.entries(Routes).map(([key, data]) => (
+        <li>
+          <a href={data.path} key={key}>
+            {data.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 );

@@ -5,6 +5,7 @@ import { Canvas } from "../../components/Canvas";
 import { noop } from "../../logic/noop";
 import { TripleSlider } from "../../components/TripleSlider";
 import { imageToGrayscaleAdjusted } from "../../logic/imageToGrayscaleAdjusted";
+import { Routes } from "../../routes";
 
 const GreyscaleAdjusted = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -14,7 +15,7 @@ const GreyscaleAdjusted = () => {
 
   return (
     <section>
-      <h1>Skala szarości (sterowana)</h1>
+      <h1>{Routes.greyscaleAdjusted.title}</h1>
       <Uploader setValue={setImage} />
       <Canvas image={image} callback={noop} />
       <Canvas image={image} callback={imageToGrayscaleAdjusted(values)} />

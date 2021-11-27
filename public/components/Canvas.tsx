@@ -1,7 +1,7 @@
 import * as preact from "preact";
 import { useEffect, useRef } from "preact/compat";
 import styles from "./Canvas.module.css";
-import { CANVAS_SIZE } from "../consts";
+import { CANVAS_MAX_SIZE } from "../consts";
 
 type Props = {
   image: HTMLImageElement;
@@ -18,8 +18,8 @@ export const Canvas = ({ image, callback }: Props) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const ratio = Math.min(
-      CANVAS_SIZE / image.width,
-      CANVAS_SIZE / image.height
+      CANVAS_MAX_SIZE / image.width,
+      CANVAS_MAX_SIZE / image.height
     );
     context.imageSmoothingEnabled = true;
     context.imageSmoothingQuality = "high";

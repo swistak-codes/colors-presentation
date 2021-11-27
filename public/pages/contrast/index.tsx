@@ -4,24 +4,24 @@ import { Uploader } from "../../components/Uploader";
 import { Canvas } from "../../components/Canvas";
 import { noop } from "../../logic/noop";
 import { Slider } from "../../components/Slider";
-import { imageToTwoTone } from "../../logic/imageToTwoTone";
 import { Routes } from "../../routes";
+import { changeContrast } from "../../logic/changeContrast";
 
-const TwoTone = () => {
+const Contrast = () => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [threshold, setThreshold] = useState(128);
+  const [contrast, setContrast] = useState(0);
 
   return (
     <section>
-      <h1>{Routes.twoTone.title}</h1>
+      <h1>{Routes.contrast.title}</h1>
       <Uploader setValue={setImage} />
       <Canvas image={image} callback={noop} />
-      <Canvas image={image} callback={imageToTwoTone(threshold)} />
+      <Canvas image={image} callback={changeContrast(contrast)} />
       <Slider
-        value={threshold}
-        setValue={setThreshold}
-        label="Próg"
-        min={0}
+        value={contrast}
+        setValue={setContrast}
+        label="C"
+        min={-255}
         max={255}
         realMax={255}
         step={1}
@@ -31,4 +31,4 @@ const TwoTone = () => {
   );
 };
 
-export default TwoTone;
+export default Contrast;
